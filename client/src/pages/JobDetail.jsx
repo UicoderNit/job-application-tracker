@@ -1,4 +1,4 @@
-import { ArrowLeft, Edit, ExternalLink, Mail, Trash2 } from 'lucide-react';
+import { ArrowLeft, BriefcaseBusiness, Edit, ExternalLink, Mail, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { deleteJob, fetchJob } from '../api/jobs.js';
@@ -50,17 +50,21 @@ const JobDetail = () => {
 
   return (
     <div className="grid gap-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+      <div className="panel overflow-hidden bg-ink p-6 text-white sm:p-8">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <Link to="/jobs" className="mb-4 inline-flex items-center gap-2 text-sm font-bold text-brand">
+          <Link to="/jobs" className="mb-5 inline-flex items-center gap-2 text-sm font-black text-teal-200 hover:text-white">
             <ArrowLeft size={17} aria-hidden="true" />
             Applications
           </Link>
           <div className="flex flex-wrap items-center gap-3">
-            <h1 className="text-3xl font-bold text-ink">{job.position}</h1>
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white/10 text-teal-200">
+              <BriefcaseBusiness size={24} aria-hidden="true" />
+            </div>
+            <h1 className="text-3xl font-black tracking-tight sm:text-4xl">{job.position}</h1>
             <StatusBadge status={job.status} />
           </div>
-          <p className="mt-2 text-lg font-semibold text-muted">{job.company}</p>
+          <p className="mt-3 text-lg font-bold text-slate-300">{job.company}</p>
         </div>
         <div className="flex gap-2">
           <Link to={`/jobs/${job._id}/edit`} className="btn-secondary">
@@ -71,6 +75,7 @@ const JobDetail = () => {
             <Trash2 size={17} aria-hidden="true" />
             {deleting ? 'Deleting...' : 'Delete'}
           </button>
+        </div>
         </div>
       </div>
 
@@ -83,13 +88,15 @@ const JobDetail = () => {
 
       <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="panel p-5">
-          <h2 className="text-lg font-bold text-ink">Notes</h2>
+          <p className="section-kicker">Notes</p>
+          <h2 className="mt-1 text-xl font-black text-ink">Interview context</h2>
           <p className="mt-3 whitespace-pre-wrap text-sm leading-7 text-slate-700">
             {job.notes || 'No notes added yet.'}
           </p>
         </div>
         <div className="panel p-5">
-          <h2 className="text-lg font-bold text-ink">Application details</h2>
+          <p className="section-kicker">Details</p>
+          <h2 className="mt-1 text-xl font-black text-ink">Application details</h2>
           <dl className="mt-4 grid gap-4 text-sm">
             <DetailRow label="Salary" value={job.salaryRange || 'Not specified'} />
             <DetailRow label="Source" value={job.source || 'Not specified'} />
@@ -128,15 +135,15 @@ const JobDetail = () => {
 };
 
 const DetailTile = ({ label, value }) => (
-  <div className="panel p-4">
-    <p className="text-xs font-bold uppercase text-slate-500">{label}</p>
-    <p className="mt-2 text-sm font-bold text-ink">{value}</p>
+  <div className="panel p-4 transition hover:-translate-y-0.5 hover:shadow-glow">
+    <p className="text-xs font-black uppercase tracking-wide text-slate-500">{label}</p>
+    <p className="mt-2 text-sm font-black text-ink">{value}</p>
   </div>
 );
 
 const DetailRow = ({ label, value }) => (
-  <div>
-    <dt className="font-bold text-slate-500">{label}</dt>
+  <div className="rounded-md border border-slate-100 bg-slate-50/80 p-3">
+    <dt className="font-black text-slate-500">{label}</dt>
     <dd className="mt-1 text-slate-800">{value}</dd>
   </div>
 );

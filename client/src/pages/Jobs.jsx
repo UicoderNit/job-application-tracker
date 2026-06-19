@@ -1,4 +1,4 @@
-import { Plus, Search, SlidersHorizontal } from 'lucide-react';
+import { Building2, CalendarClock, MapPin, Plus, Search, SlidersHorizontal } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchJobs } from '../api/jobs.js';
@@ -47,10 +47,11 @@ const Jobs = () => {
 
   return (
     <div className="grid gap-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-ink">Applications</h1>
-          <p className="mt-1 text-sm text-muted">Search, filter, and manage every role in your pipeline.</p>
+          <p className="section-kicker mb-2">Application pipeline</p>
+          <h1 className="page-title">Applications</h1>
+          <p className="mt-2 text-sm text-muted">Search, filter, and manage every role in your pipeline.</p>
         </div>
         <Link to="/jobs/new" className="btn-primary">
           <Plus size={17} aria-hidden="true" />
@@ -58,10 +59,15 @@ const Jobs = () => {
         </Link>
       </div>
 
-      <section className="panel p-4">
-        <div className="mb-4 flex items-center gap-2 text-sm font-bold text-ink">
-          <SlidersHorizontal size={18} aria-hidden="true" />
-          Filters
+      <section className="panel p-5">
+        <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-2 text-sm font-black text-ink">
+            <SlidersHorizontal size={18} aria-hidden="true" />
+            Filters
+          </div>
+          <span className="text-xs font-bold uppercase tracking-wide text-slate-500">
+            {jobs.length} result{jobs.length === 1 ? '' : 's'}
+          </span>
         </div>
         <div className="grid gap-3 md:grid-cols-5">
           <label className="relative md:col-span-2">
@@ -137,21 +143,32 @@ const Jobs = () => {
             <Link
               key={job._id}
               to={`/jobs/${job._id}`}
-              className="panel grid gap-4 p-4 transition hover:border-slate-300 sm:grid-cols-[1.5fr_1fr_auto]"
+              className="panel grid gap-4 p-5 transition hover:-translate-y-1 hover:border-teal-100 hover:shadow-glow sm:grid-cols-[1.5fr_1fr_auto]"
             >
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <h2 className="font-bold text-ink">{job.position}</h2>
+                  <h2 className="text-lg font-black text-ink">{job.position}</h2>
                   <StatusBadge status={job.status} />
                 </div>
-                <p className="mt-1 text-sm text-muted">{job.company}</p>
+                <p className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-muted">
+                  <Building2 size={16} aria-hidden="true" />
+                  {job.company}
+                </p>
               </div>
-              <div className="text-sm text-muted">
-                <p>{job.location || 'No location'}</p>
-                <p className="mt-1">{job.jobType}</p>
+              <div className="text-sm font-semibold text-muted">
+                <p className="inline-flex items-center gap-2">
+                  <MapPin size={16} aria-hidden="true" />
+                  {job.location || 'No location'}
+                </p>
+                <p className="mt-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-600 sm:inline-flex">
+                  {job.jobType}
+                </p>
               </div>
-              <div className="text-sm font-semibold text-slate-600 sm:text-right">
-                <p>Applied {formatDate(job.applicationDate)}</p>
+              <div className="text-sm font-bold text-slate-600 sm:text-right">
+                <p className="inline-flex items-center gap-2 sm:justify-end">
+                  <CalendarClock size={16} aria-hidden="true" />
+                  Applied {formatDate(job.applicationDate)}
+                </p>
                 <p className="mt-1">Deadline {formatDate(job.deadline)}</p>
               </div>
             </Link>

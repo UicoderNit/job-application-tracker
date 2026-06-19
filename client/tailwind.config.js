@@ -3,14 +3,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: '#17202a',
+        ink: '#111827',
         muted: '#64748b',
-        paper: '#f7f8fb',
+        paper: '#f4f7fb',
         brand: '#0f766e',
-        accent: '#d97706'
+        accent: '#f59e0b',
+        coral: '#e11d48'
       },
       boxShadow: {
-        soft: '0 14px 40px rgba(15, 23, 42, 0.08)'
+        soft: '0 18px 50px rgba(15, 23, 42, 0.10)',
+        glow: '0 20px 60px rgba(15, 118, 110, 0.18)'
       }
     }
   },
